@@ -15,13 +15,9 @@ interface LogoLSYProps {
 const CREST_SIZES: Record<NonNullable<LogoLSYProps["size"]>, string> = {
   sm: "size-9",
   md: "size-11",
-  lg: "size-14",
+  lg: "size-16",
 };
 
-/**
- * Logo institutionnel. Les armoiries sont posées sur une pastille claire
- * pour rester nettes aussi bien sur fond clair que sur fond bleu nuit.
- */
 export function LogoLSY({
   variant = "onLight",
   showText = true,
@@ -32,22 +28,15 @@ export function LogoLSY({
   const dark = variant === "onDark";
 
   const content = (
-    <span className={cn("inline-flex items-center gap-3", className)}>
-      <span
-        className={cn(
-          "relative block shrink-0 overflow-hidden rounded-xl bg-white",
-          dark
-            ? "ring-1 ring-white/25 shadow-[0_6px_20px_-8px_rgba(0,0,0,0.6)]"
-            : "ring-1 ring-lsy-blue-900/10 shadow-soft",
-          CREST_SIZES[size],
-        )}
-      >
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
+      {/* Armoiries — fond transparent, pas de boîte blanche */}
+      <span className={cn("relative block shrink-0 overflow-hidden", CREST_SIZES[size])}>
         <Image
-          src="/brand/logo-lsy.jpg"
+          src="/brand/Logo-LSY.svg"
           alt="Armoiries du Lycée Scientifique de Yamoussoukro"
           fill
-          sizes="56px"
-          className="object-contain p-1"
+          sizes="64px"
+          className="object-contain"
           priority
         />
       </span>
