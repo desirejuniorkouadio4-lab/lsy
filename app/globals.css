@@ -1,0 +1,257 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   Lycée Scientifique de Yamoussoukro — Charte graphique web
+   Conception : Digital Access – Web Access Solution
+   ========================================================================= */
+
+@theme {
+  /* — Bleu nuit institutionnel — */
+  --color-lsy-blue-950: #06113a;
+  --color-lsy-blue-900: #0a1a4a;
+  --color-lsy-blue-800: #142b6f;
+  --color-lsy-blue-700: #1e3a8a;
+  --color-lsy-blue-600: #2747a0;
+  --color-lsy-blue-500: #3a5cc0;
+
+  /* — Or prestige — */
+  --color-lsy-gold-700: #95701a;
+  --color-lsy-gold-600: #b5871c;
+  --color-lsy-gold-500: #d6a329;
+  --color-lsy-gold-400: #e8bd4e;
+  --color-lsy-gold-300: #f0d384;
+  --color-lsy-gold-100: #f8edc9;
+
+  /* — Surfaces de lecture — */
+  --color-lsy-ivory: #f8f5ec;
+  --color-lsy-paper: #fffcf5;
+  --color-lsy-ink: #0b1530;
+
+  /* — Textes & lignes — */
+  --color-lsy-slate: #334155;
+  --color-lsy-muted: #64748b;
+  --color-lsy-line: #e5e7eb;
+
+  /* — Rappels nationaux (accents mesurés) — */
+  --color-lsy-success: #138a4b;
+  --color-lsy-green: #0f9d58;
+  --color-lsy-orange: #f28c28;
+
+  /* — Typographie — */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
+
+  /* — Rayons — */
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+  --radius-4xl: 2.25rem;
+
+  /* — Ombres premium — */
+  --shadow-soft: 0 1px 2px rgba(6, 17, 58, 0.04),
+    0 8px 24px -12px rgba(6, 17, 58, 0.18);
+  --shadow-card: 0 2px 4px rgba(6, 17, 58, 0.05),
+    0 18px 40px -22px rgba(6, 17, 58, 0.35);
+  --shadow-elevated: 0 30px 70px -30px rgba(6, 17, 58, 0.55);
+  --shadow-gold: 0 10px 30px -12px rgba(214, 163, 41, 0.5);
+
+  /* — Animations — */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-float: float 9s var(--ease-out-soft) infinite;
+  --animate-shimmer: shimmer 2.6s linear infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) }
+  50% { transform: translateY(-12px) }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0 }
+  100% { background-position: 200% 0 }
+}
+
+@keyframes aurora {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.7 }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.08); opacity: 1 }
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+@layer base {
+  :root {
+    --background: var(--color-lsy-paper);
+    --foreground: var(--color-lsy-ink);
+  }
+
+  * {
+    border-color: var(--color-lsy-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5 {
+    text-wrap: balance;
+    letter-spacing: -0.018em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-lsy-gold-300);
+    color: var(--color-lsy-blue-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lsy-gold-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Barre de défilement discrète */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-lsy-ivory);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-lsy-blue-800) 35%, transparent);
+    border: 3px solid var(--color-lsy-ivory);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-lsy-blue-800);
+  }
+}
+
+/* =========================================================================
+   Utilitaires de marque
+   ========================================================================= */
+@layer utilities {
+  /* Texte doré dégradé (sur fond sombre) */
+  .text-gold-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-lsy-gold-300),
+      var(--color-lsy-gold-500) 45%,
+      var(--color-lsy-gold-300)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Verre dépoli clair */
+  .glass {
+    background: color-mix(in srgb, white 62%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid color-mix(in srgb, white 70%, transparent);
+  }
+
+  /* Verre dépoli sombre (sur hero / sections bleu nuit) */
+  .glass-dark {
+    background: color-mix(in srgb, var(--color-lsy-blue-950) 42%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in srgb, white 12%, transparent);
+  }
+
+  /* Filet doré fin */
+  .hairline-gold {
+    border: 1px solid color-mix(in srgb, var(--color-lsy-gold-500) 45%, transparent);
+  }
+
+  /* Liseré supérieur tricolore discret (rappel ivoirien) */
+  .rule-civ {
+    background: linear-gradient(
+      90deg,
+      var(--color-lsy-orange) 0 33.33%,
+      white 33.33% 66.66%,
+      var(--color-lsy-green) 66.66% 100%
+    );
+  }
+
+  /* Grille scientifique subtile (fond sombre) */
+  .bg-grid-science {
+    background-image:
+      linear-gradient(color-mix(in srgb, white 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, white 6%, transparent) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* Grille fine (fond clair) */
+  .bg-grid-light {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--color-lsy-blue-900) 5%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-lsy-blue-900) 5%, transparent) 1px, transparent 1px);
+    background-size: 38px 38px;
+  }
+
+  /* Points (mode pointillé) */
+  .bg-dots {
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--color-lsy-blue-900) 12%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+
+  /* Masque de fondu en bas */
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent);
+    mask-image: linear-gradient(to bottom, black 70%, transparent);
+  }
+
+  /* Effet brillance (placeholders chargement) */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-lsy-ivory) 25%,
+      color-mix(in srgb, var(--color-lsy-gold-100) 60%, var(--color-lsy-ivory)) 37%,
+      var(--color-lsy-ivory) 63%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  /* Largeur de lecture confortable */
+  .prose-measure {
+    max-width: 68ch;
+  }
+}
+
+/* =========================================================================
+   Accessibilité : mouvement réduit
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

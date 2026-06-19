@@ -1,0 +1,225 @@
+// Schéma Prisma — Lycée Scientifique de Yamoussoukro
+// Conception : Digital Access – Web Access Solution
+//
+// Note : le provider de développement est SQLite (qui ne supporte pas les enums Prisma).
+// Les statuts et rôles sont donc stockés en String et validés côté application via Zod
+// (voir lib/constants.ts). Ce choix reste compatible avec PostgreSQL en production.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Comptes (administration, communauté, portail). Rôle stocké en String (cf. ROLES).
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String?
+  role      String    @default("STUDENT")
+  isActive  Boolean   @default(true)
+  articles  Article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+/// Catégories d'actualités
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  articles Article[]
+}
+
+/// Actualités / articles
+model Article {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String
+  content     String
+  coverImage  String?
+  tags        String    @default("") // liste séparée par des virgules
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
+  authorId    String?
+  author      User?     @relation(fields: [authorId], references: [id])
+  status      String    @default("DRAFT") // DRAFT | PUBLISHED | ARCHIVED
+  featured    Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status])
+}
+
+/// Communiqués officiels
+model Communique {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  content     String
+  target      String    @default("TOUS") // ELEVES | PARENTS | ENSEIGNANTS | TOUS
+  fileUrl     String?
+  isUrgent    Boolean   @default(false)
+  status      String    @default("DRAFT")
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status])
+}
+
+/// Bibliothèque documentaire
+model Document {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  fileUrl     String
+  type        String   @default("Ressource pédagogique")
+  level       String?
+  subject     String?
+  year        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([type])
+}
+
+/// Évènements
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  description String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  coverImage  String?
+  category    String?
+  status      String    @default("DRAFT")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([startDate])
+}
+
+/// Albums de la galerie
+model GalleryAlbum {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique
+  description String?
+  coverImage  String?
+  year        String?
+  photos      GalleryPhoto[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+/// Photos de la galerie
+model GalleryPhoto {
+  id        String       @id @default(cuid())
+  albumId   String
+  album     GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  caption   String?
+  sortOrder Int          @default(0)
+  createdAt DateTime     @default(now())
+}
+
+/// Web TV
+model Video {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  videoUrl    String
+  thumbnail   String?
+  category    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// Majors (lauréats)
+model Major {
+  id        String   @id @default(cuid())
+  name      String
+  year      String
+  className String
+  average   String?
+  photoUrl  String?
+  testimony String?
+  isDemo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+/// Demandes d'inscription au réseau alumni
+model AlumniProfile {
+  id             String   @id @default(cuid())
+  fullName       String
+  email          String
+  graduationYear String?
+  profession     String?
+  message        String?
+  wantsMentor    Boolean  @default(false)
+  status         String   @default("PENDING") // PENDING | REVIEWED | APPROVED | REJECTED
+  createdAt      DateTime @default(now())
+}
+
+/// Demandes de partenariat
+model PartnerRequest {
+  id              String   @id @default(cuid())
+  organization    String
+  contactName     String
+  email           String
+  phone           String?
+  partnershipType String?
+  message         String
+  status          String   @default("PENDING")
+  createdAt       DateTime @default(now())
+}
+
+/// Candidatures mentors
+model MentorRequest {
+  id           String   @id @default(cuid())
+  fullName     String
+  email        String
+  domain       String?
+  availability String?
+  message      String?
+  status       String   @default("PENDING")
+  createdAt    DateTime @default(now())
+}
+
+/// Messages du formulaire de contact
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+}
+
+/// Paramètres du site (clé/valeur) gérés depuis l'administration
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+/// Journal des actions d'administration
+model ActivityLog {
+  id        String   @id @default(cuid())
+  actor     String
+  action    String
+  entity    String?
+  createdAt DateTime @default(now())
+}
