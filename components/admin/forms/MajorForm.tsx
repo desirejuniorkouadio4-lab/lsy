@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { LEVELS } from "@/lib/constants";
 
 type Major = {
@@ -81,10 +82,11 @@ export function MajorForm({ major }: Props) {
               placeholder="18.50" className={fieldCls} />
           </div>
           <div className="sm:col-span-2">
-            <label className={labelCls}>Photo (URL)</label>
-            <input type="text" value={form.photoUrl}
-              onChange={(e) => set("photoUrl", e.target.value)}
-              placeholder="https://..." className={fieldCls} />
+            <ImageUpload
+              label="Photo du major"
+              value={form.photoUrl}
+              onChange={(url) => set("photoUrl", url)}
+            />
           </div>
           <div className="sm:col-span-2">
             <label className={labelCls}>Témoignage</label>

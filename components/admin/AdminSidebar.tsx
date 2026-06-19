@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   Award,
   BookOpen,
+  Building2,
   CalendarDays,
   FileText,
   LayoutDashboard,
@@ -31,6 +32,7 @@ const NAV = [
   { label: "Majors", href: "/admin/majors", Icon: Award },
   { label: "Messages", href: "/admin/messages", Icon: Mail },
   { label: "Alumni", href: "/admin/alumni", Icon: Users },
+  { label: "Partenaires", href: "/admin/partners", Icon: Building2 },
 ];
 
 export function AdminSidebar({ session }: Props) {

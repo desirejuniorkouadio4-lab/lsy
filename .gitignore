@@ -45,3 +45,5 @@ next-env.d.ts
 # prisma — base de données locale
 /prisma/*.db
 /prisma/*.db-journal
+
+.vercel

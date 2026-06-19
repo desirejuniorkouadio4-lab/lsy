@@ -31,8 +31,13 @@ export function AdminFormLayout({ title, backHref, backLabel, children }: Props)
   );
 }
 
+// Champs de formulaire admin — fond sombre, options dark
 export const fieldCls =
   "w-full rounded-xl border border-white/10 bg-white/8 px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-lsy-gold-400/60 focus:ring-2 focus:ring-lsy-gold-400/20 transition";
+
+// Select avec options dark (résout le fond blanc dans le dropdown natif)
+export const selectCls =
+  "w-full rounded-xl border border-white/10 bg-[#0f1829] px-4 py-2.5 text-sm text-white outline-none focus:border-lsy-gold-400/60 focus:ring-2 focus:ring-lsy-gold-400/20 transition [&>option]:bg-[#0f1829] [&>option]:text-white";
 
 export const labelCls = "mb-1.5 block text-xs font-semibold text-white/60";
 

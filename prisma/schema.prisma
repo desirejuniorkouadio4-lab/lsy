@@ -215,6 +215,20 @@ model SiteSetting {
   updatedAt DateTime @updatedAt
 }
 
+/// Partenaires institutionnels (logos visibles côté public)
+model Partner {
+  id        String   @id @default(cuid())
+  name      String
+  acronym   String?
+  logoUrl   String?
+  website   String?
+  category  String?
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 /// Journal des actions d'administration
 model ActivityLog {
   id        String   @id @default(cuid())

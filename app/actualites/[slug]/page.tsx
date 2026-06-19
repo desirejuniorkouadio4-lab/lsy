@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, CalendarDays, Tag } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
 import { Container } from "@/components/ui/Container";
@@ -95,7 +96,22 @@ export default async function ArticlePage({ params }: Props) {
               </div>
             </Reveal>
 
-            <Reveal delay={0.1}>
+            {article.coverImage && (
+              <Reveal delay={0.1}>
+                <div className="relative mb-8 h-64 overflow-hidden rounded-2xl sm:h-80 lg:h-96">
+                  <Image
+                    src={article.coverImage}
+                    alt={article.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                    priority
+                  />
+                </div>
+              </Reveal>
+            )}
+
+            <Reveal delay={0.12}>
               <p className="mb-8 text-lg leading-relaxed text-lsy-slate font-medium">{article.excerpt}</p>
             </Reveal>
 

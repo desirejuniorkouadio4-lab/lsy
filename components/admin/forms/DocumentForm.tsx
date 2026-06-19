@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
 import { DOCUMENT_TYPES, LEVELS, SUBJECTS } from "@/lib/constants";
 
 type Document = {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { CalendarDays, Tag } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageShell } from "@/components/layout/PageShell";
@@ -68,9 +69,21 @@ export default async function ActualitesPage() {
                         href={`/actualites/${article.slug}`}
                         className="group flex gap-5 rounded-3xl bg-white p-5 shadow-soft ring-1 ring-lsy-line transition-all hover:shadow-card"
                       >
-                        {/* Image placeholder */}
-                        <div className="hidden size-20 shrink-0 rounded-2xl bg-lsy-blue-100 sm:flex items-center justify-center">
-                          <Tag className="size-7 text-lsy-blue-400" aria-hidden />
+                        {/* Miniature article */}
+                        <div className="relative hidden size-20 shrink-0 overflow-hidden rounded-2xl bg-lsy-blue-100 sm:block">
+                          {article.coverImage ? (
+                            <Image
+                              src={article.coverImage}
+                              alt=""
+                              fill
+                              className="object-cover"
+                              sizes="80px"
+                            />
+                          ) : (
+                            <div className="flex size-full items-center justify-center">
+                              <Tag className="size-7 text-lsy-blue-400" aria-hidden />
+                            </div>
+                          )}
                         </div>
                         <div className="min-w-0 flex-1">
                           {article.category && (

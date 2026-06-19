@@ -1,15 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Modules natifs / Prisma : à garder hors du bundle serveur.
   serverExternalPackages: [
     "better-sqlite3",
     "@prisma/adapter-better-sqlite3",
   ],
   images: {
-    // Le site s'appuie sur un habillage SVG/gradient de marque + le logo local.
-    // Formats modernes pour les rares images bitmap.
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      // Vercel Blob
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+      { protocol: "https", hostname: "*.blob.vercel-storage.com" },
+      // Images externes génériques (CDN partenaires, etc.)
+      { protocol: "https", hostname: "**" },
+    ],
   },
 };
 

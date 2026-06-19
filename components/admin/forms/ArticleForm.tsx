@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { slugify } from "@/lib/slugify";
 
 type Category = { id: string; name: string };
@@ -120,7 +121,7 @@ export function ArticleForm({ article, categories }: Props) {
             <label className={labelCls}>Catégorie</label>
             <select value={form.categoryId}
               onChange={(e) => set("categoryId", e.target.value)}
-              className={fieldCls}>
+              className={selectCls}>
               <option value="">— Aucune catégorie —</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
@@ -132,18 +133,19 @@ export function ArticleForm({ article, categories }: Props) {
             <label className={labelCls}>Statut</label>
             <select value={form.status}
               onChange={(e) => set("status", e.target.value)}
-              className={fieldCls}>
+              className={selectCls}>
               <option value="DRAFT">Brouillon</option>
               <option value="PUBLISHED">Publié</option>
               <option value="ARCHIVED">Archivé</option>
             </select>
           </div>
 
-          <div>
-            <label className={labelCls}>Image de couverture (URL)</label>
-            <input type="text" value={form.coverImage}
-              onChange={(e) => set("coverImage", e.target.value)}
-              placeholder="https://..." className={fieldCls} />
+          <div className="sm:col-span-2">
+            <ImageUpload
+              label="Image de couverture"
+              value={form.coverImage}
+              onChange={(url) => set("coverImage", url)}
+            />
           </div>
 
           <div>
