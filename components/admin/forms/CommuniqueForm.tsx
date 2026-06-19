@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
 import { AdminSelect } from "@/components/admin/AdminSelect";
+import { RichEditor } from "@/components/admin/RichEditor";
 import { slugify } from "@/lib/slugify";
 
 type Communique = {
@@ -81,10 +82,11 @@ export function CommuniqueForm({ communique }: Props) {
 
         <div>
           <label className={labelCls}>Contenu *</label>
-          <textarea required rows={10} value={form.content}
-            onChange={(e) => set("content", e.target.value)}
-            placeholder="<p>Contenu du communiqué...</p>"
-            className={`${fieldCls} font-mono text-xs`} />
+          <RichEditor
+            value={form.content}
+            onChange={(html) => set("content", html)}
+            placeholder="Rédigez le contenu du communiqué…"
+          />
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">

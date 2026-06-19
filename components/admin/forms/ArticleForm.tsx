@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
 import { AdminSelect } from "@/components/admin/AdminSelect";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RichEditor } from "@/components/admin/RichEditor";
 import { slugify } from "@/lib/slugify";
 
 type Category = { id: string; name: string };
@@ -107,11 +108,12 @@ export function ArticleForm({ article, categories }: Props) {
           </div>
 
           <div className="sm:col-span-2">
-            <label className={labelCls}>Contenu HTML *</label>
-            <textarea required rows={12} value={form.content}
-              onChange={(e) => set("content", e.target.value)}
-              placeholder="<p>Contenu de l'article en HTML...</p>"
-              className={`${fieldCls} font-mono text-xs`} />
+            <label className={labelCls}>Contenu *</label>
+            <RichEditor
+              value={form.content}
+              onChange={(html) => set("content", html)}
+              placeholder="Rédigez le contenu de l'article…"
+            />
           </div>
 
           <div>

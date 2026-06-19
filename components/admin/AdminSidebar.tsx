@@ -10,10 +10,13 @@ import {
   ChevronLeft,
   ChevronRight,
   FileText,
+  Film,
+  Images,
   LayoutDashboard,
   LogOut,
   Mail,
   Megaphone,
+  Settings,
   Users,
   X,
 } from "lucide-react";
@@ -40,6 +43,9 @@ const NAV = [
   { label: "Messages", href: "/admin/messages", Icon: Mail },
   { label: "Alumni", href: "/admin/alumni", Icon: Users },
   { label: "Partenaires", href: "/admin/partners", Icon: Building2 },
+  { label: "Galerie", href: "/admin/galerie", Icon: Images },
+  { label: "Vidéos", href: "/admin/videos", Icon: Film },
+  { label: "Paramètres", href: "/admin/settings", Icon: Settings },
 ];
 
 export function AdminSidebar({

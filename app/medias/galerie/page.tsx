@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageShell } from "@/components/layout/PageShell";
@@ -62,21 +64,25 @@ export default async function GaleriePage() {
                 const cover = album.photos[0];
                 return (
                   <StaggerItem key={album.id}>
-                    <div className="group overflow-hidden rounded-3xl bg-white shadow-soft ring-1 ring-lsy-line">
-                      <div className="aspect-video w-full bg-lsy-blue-100 flex items-center justify-center">
+                    <Link href={`/medias/galerie/${album.slug}`}
+                      className="group block overflow-hidden rounded-3xl bg-white shadow-soft ring-1 ring-lsy-line transition-all hover:shadow-card hover:ring-lsy-gold-400/40">
+                      <div className="relative aspect-video w-full overflow-hidden bg-lsy-blue-100">
                         {cover ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
+                          <Image
                             src={cover.imageUrl}
                             alt={album.title}
-                            className="h-full w-full object-cover"
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         ) : (
-                          <ImageIcon className="size-10 text-lsy-blue-300" aria-hidden />
+                          <div className="flex size-full items-center justify-center">
+                            <ImageIcon className="size-10 text-lsy-blue-300" aria-hidden />
+                          </div>
                         )}
                       </div>
                       <div className="p-4">
-                        <p className="font-bold text-lsy-blue-900">{album.title}</p>
+                        <p className="font-bold text-lsy-blue-900 group-hover:text-lsy-blue-700 transition-colors">{album.title}</p>
                         {album.description && (
                           <p className="mt-1 text-sm text-lsy-muted line-clamp-2">{album.description}</p>
                         )}
@@ -84,7 +90,7 @@ export default async function GaleriePage() {
                           <p className="mt-2 text-xs font-semibold text-lsy-gold-600">{album.year}</p>
                         )}
                       </div>
-                    </div>
+                    </Link>
                   </StaggerItem>
                 );
               })}

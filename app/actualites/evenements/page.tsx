@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CalendarDays, MapPin } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageShell } from "@/components/layout/PageShell";
@@ -41,9 +42,10 @@ function EventCard({
 }) {
   const parts = dateParts(event.startDate);
   return (
-    <div
+    <Link
+      href={`/actualites/evenements/${event.slug}`}
       className={cn(
-        "flex gap-4 rounded-2xl bg-white p-5 shadow-soft ring-1 ring-lsy-line",
+        "group flex gap-4 rounded-2xl bg-white p-5 shadow-soft ring-1 ring-lsy-line transition-all hover:ring-lsy-gold-400/40 hover:shadow-card",
         past && "opacity-70",
       )}
     >
@@ -70,7 +72,7 @@ function EventCard({
         </div>
         <p className="mt-2 line-clamp-2 text-sm text-lsy-muted">{event.description}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

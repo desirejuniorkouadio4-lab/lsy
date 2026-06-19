@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { AlertCircle, CalendarDays, Download } from "lucide-react";
+import Link from "next/link";
+import { AlertCircle, ArrowRight, CalendarDays, Download } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import { PageShell } from "@/components/layout/PageShell";
 import { Container } from "@/components/ui/Container";
@@ -66,8 +67,8 @@ export default async function CommuniquesPage() {
                 <StaggerItem key={c.id}>
                   <div
                     className={cn(
-                      "rounded-2xl bg-white p-5 shadow-soft ring-1 transition-all",
-                      c.isUrgent ? "ring-lsy-orange/40" : "ring-lsy-line",
+                      "rounded-2xl bg-white p-5 shadow-soft ring-1 transition-all hover:shadow-card",
+                      c.isUrgent ? "ring-lsy-orange/40" : "ring-lsy-line hover:ring-lsy-gold-400/40",
                     )}
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
@@ -86,7 +87,10 @@ export default async function CommuniquesPage() {
                               {TARGET_LABELS[c.target] ?? c.target}
                             </span>
                           </div>
-                          <p className="font-bold text-lsy-blue-900">{c.title}</p>
+                          <Link href={`/actualites/communiques/${c.slug}`}
+                            className="font-bold text-lsy-blue-900 hover:text-lsy-blue-700 transition-colors">
+                            {c.title}
+                          </Link>
                           <p className="mt-0.5 flex items-center gap-1.5 text-xs text-lsy-muted">
                             <CalendarDays className="size-3" aria-hidden />
                             {formatDateLong(c.publishedAt ?? c.createdAt)}

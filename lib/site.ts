@@ -1,6 +1,5 @@
 /**
  * Configuration centrale du site — Lycée Scientifique de Yamoussoukro.
- * Les coordonnées marquées « à confirmer » doivent être validées par l'administration.
  */
 export const site = {
   name: "Lycée Scientifique de Yamoussoukro",
@@ -18,15 +17,19 @@ export const site = {
   contact: {
     city: "Yamoussoukro",
     country: "Côte d'Ivoire",
-    address: "Yamoussoukro, Côte d'Ivoire",
-    addressNote: "Adresse postale complète à confirmer par l'administration.",
+    address: "BP 1069, Yamoussoukro, Côte d'Ivoire",
     email: "contact@lsy.ci",
-    phoneDisplay: "À renseigner",
-    phoneHref: "",
-    note: "Coordonnées officielles à confirmer par l'administration du lycée.",
+    phoneDisplay: "27 30 64 07 88",
+    phoneHref: "+22527306407 88",
     mapsQuery: "Lycée Scientifique de Yamoussoukro, Yamoussoukro",
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Lyc%C3%A9e+Scientifique+de+Yamoussoukro",
+  },
+
+  proviseur: {
+    name: "Soulemane COULIBALY",
+    title: "Proviseur — Lycée Scientifique de Yamoussoukro",
+    photoUrl: "/brand/Proviseur.jpg",
   },
 
   social: {
