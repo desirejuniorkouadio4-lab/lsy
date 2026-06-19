@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminSelect } from "@/components/admin/AdminSelect";
 import { slugify } from "@/lib/slugify";
 
 type Communique = {
@@ -11,6 +12,19 @@ type Communique = {
 };
 
 interface Props { communique?: Communique }
+
+const TARGET_OPTIONS = [
+  { value: "TOUS", label: "Tous les publics" },
+  { value: "ELEVES", label: "Élèves" },
+  { value: "PARENTS", label: "Parents" },
+  { value: "ENSEIGNANTS", label: "Enseignants" },
+];
+
+const STATUS_OPTIONS = [
+  { value: "DRAFT", label: "Brouillon" },
+  { value: "PUBLISHED", label: "Publié" },
+  { value: "ARCHIVED", label: "Archivé" },
+];
 
 export function CommuniqueForm({ communique }: Props) {
   const router = useRouter();
@@ -33,8 +47,7 @@ export function CommuniqueForm({ communique }: Props) {
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSaving(true); setError("");
+    e.preventDefault(); setSaving(true); setError("");
     try {
       const url = isEdit ? `/api/admin/communiques/${communique.id}` : "/api/admin/communiques";
       const res = await fetch(url, {
@@ -63,8 +76,7 @@ export function CommuniqueForm({ communique }: Props) {
         <div>
           <label className={labelCls}>Slug</label>
           <input type="text" value={form.slug}
-            onChange={(e) => set("slug", e.target.value)}
-            className={fieldCls} />
+            onChange={(e) => set("slug", e.target.value)} className={fieldCls} />
         </div>
 
         <div>
@@ -78,20 +90,11 @@ export function CommuniqueForm({ communique }: Props) {
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={labelCls}>Public cible</label>
-            <select value={form.target} onChange={(e) => set("target", e.target.value)} className={fieldCls}>
-              <option value="TOUS">Tous les publics</option>
-              <option value="ELEVES">Élèves</option>
-              <option value="PARENTS">Parents</option>
-              <option value="ENSEIGNANTS">Enseignants</option>
-            </select>
+            <AdminSelect value={form.target} onChange={(v) => set("target", v)} options={TARGET_OPTIONS} />
           </div>
           <div>
             <label className={labelCls}>Statut</label>
-            <select value={form.status} onChange={(e) => set("status", e.target.value)} className={fieldCls}>
-              <option value="DRAFT">Brouillon</option>
-              <option value="PUBLISHED">Publié</option>
-              <option value="ARCHIVED">Archivé</option>
-            </select>
+            <AdminSelect value={form.status} onChange={(v) => set("status", v)} options={STATUS_OPTIONS} />
           </div>
           <div className="sm:col-span-2">
             <label className={labelCls}>Fichier joint (URL)</label>

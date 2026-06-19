@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminSelect } from "@/components/admin/AdminSelect";
 import { slugify } from "@/lib/slugify";
 
 type Evenement = {
@@ -12,6 +13,12 @@ type Evenement = {
 };
 
 interface Props { evenement?: Evenement }
+
+const STATUS_OPTIONS = [
+  { value: "DRAFT", label: "Brouillon" },
+  { value: "PUBLISHED", label: "Publié" },
+  { value: "ARCHIVED", label: "Archivé" },
+];
 
 function toLocal(d: Date | null): string {
   if (!d) return "";
@@ -94,18 +101,14 @@ export function EvenementForm({ evenement }: Props) {
               placeholder="Cérémonie, Sport, Culturel…" className={fieldCls} />
           </div>
           <div>
-            <label className={labelCls}>Image (URL)</label>
+            <label className={labelCls}>Image de couverture (URL)</label>
             <input type="text" value={form.coverImage}
               onChange={(e) => set("coverImage", e.target.value)}
               placeholder="https://..." className={fieldCls} />
           </div>
           <div>
             <label className={labelCls}>Statut</label>
-            <select value={form.status} onChange={(e) => set("status", e.target.value)} className={fieldCls}>
-              <option value="DRAFT">Brouillon</option>
-              <option value="PUBLISHED">Publié</option>
-              <option value="ARCHIVED">Archivé</option>
-            </select>
+            <AdminSelect value={form.status} onChange={(v) => set("status", v)} options={STATUS_OPTIONS} />
           </div>
         </div>
 

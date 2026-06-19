@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminSelect } from "@/components/admin/AdminSelect";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { LEVELS } from "@/lib/constants";
 
@@ -13,6 +14,14 @@ type Major = {
 };
 
 interface Props { major?: Major }
+
+const CLASSE_OPTIONS = [
+  { value: "", label: "— Choisir —" },
+  ...LEVELS.map((l) => ({ value: l, label: l })),
+  { value: "BAC C", label: "BAC C" },
+  { value: "BAC D", label: "BAC D" },
+  { value: "BEPC", label: "BEPC" },
+];
 
 export function MajorForm({ major }: Props) {
   const router = useRouter();
@@ -67,13 +76,7 @@ export function MajorForm({ major }: Props) {
           </div>
           <div>
             <label className={labelCls}>Classe *</label>
-            <select value={form.className} onChange={(e) => set("className", e.target.value)} className={fieldCls}>
-              <option value="">— Choisir —</option>
-              {LEVELS.map((l) => <option key={l} value={l}>{l}</option>)}
-              <option value="BAC C">BAC C</option>
-              <option value="BAC D">BAC D</option>
-              <option value="BEPC">BEPC</option>
-            </select>
+            <AdminSelect value={form.className} onChange={(v) => set("className", v)} options={CLASSE_OPTIONS} />
           </div>
           <div>
             <label className={labelCls}>Moyenne</label>
@@ -82,18 +85,15 @@ export function MajorForm({ major }: Props) {
               placeholder="18.50" className={fieldCls} />
           </div>
           <div className="sm:col-span-2">
-            <ImageUpload
-              label="Photo du major"
+            <ImageUpload label="Photo du major"
               value={form.photoUrl}
-              onChange={(url) => set("photoUrl", url)}
-            />
+              onChange={(url) => set("photoUrl", url)} />
           </div>
           <div className="sm:col-span-2">
             <label className={labelCls}>Témoignage</label>
             <textarea rows={4} value={form.testimony}
               onChange={(e) => set("testimony", e.target.value)}
-              placeholder="Témoignage du major (affiché sur la page Majors)"
-              className={fieldCls} />
+              placeholder="Témoignage du major" className={fieldCls} />
           </div>
         </div>
 
@@ -101,7 +101,7 @@ export function MajorForm({ major }: Props) {
           <input type="checkbox" checked={form.isDemo}
             onChange={(e) => set("isDemo", e.target.checked)}
             className="size-4 accent-lsy-gold-500" />
-          <span className="text-sm text-white/70">Données de démonstration (ne s&apos;affiche pas en production)</span>
+          <span className="text-sm text-white/70">Données de démonstration</span>
         </label>
 
         {error && <p className="rounded-xl bg-red-500/15 px-3 py-2 text-xs text-red-300">{error}</p>}

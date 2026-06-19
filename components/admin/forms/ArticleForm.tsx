@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminSelect } from "@/components/admin/AdminSelect";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { slugify } from "@/lib/slugify";
 
@@ -17,6 +18,12 @@ interface Props {
   article?: Article;
   categories: Category[];
 }
+
+const STATUS_OPTIONS = [
+  { value: "DRAFT", label: "Brouillon" },
+  { value: "PUBLISHED", label: "Publié" },
+  { value: "ARCHIVED", label: "Archivé" },
+];
 
 export function ArticleForm({ article, categories }: Props) {
   const router = useRouter();
@@ -41,11 +48,7 @@ export function ArticleForm({ article, categories }: Props) {
 
   function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const title = e.target.value;
-    setForm((f) => ({
-      ...f,
-      title,
-      slug: isEdit ? f.slug : slugify(title),
-    }));
+    setForm((f) => ({ ...f, title, slug: isEdit ? f.slug : slugify(title) }));
   }
 
   function set(key: string, value: string | boolean) {
@@ -57,33 +60,27 @@ export function ArticleForm({ article, categories }: Props) {
     setSaving(true);
     setError("");
     try {
-      const url = isEdit
-        ? `/api/admin/articles/${article.id}`
-        : "/api/admin/articles";
+      const url = isEdit ? `/api/admin/articles/${article.id}` : "/api/admin/articles";
       const res = await fetch(url, {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (res.ok) {
-        router.push("/admin/articles");
-        router.refresh();
-      } else {
-        const d = await res.json();
-        setError(d.error ?? "Erreur lors de l'enregistrement.");
-      }
-    } catch {
-      setError("Erreur réseau.");
-    } finally {
-      setSaving(false);
-    }
+      if (res.ok) { router.push("/admin/articles"); router.refresh(); }
+      else { const d = await res.json(); setError(d.error ?? "Erreur."); }
+    } catch { setError("Erreur réseau."); }
+    finally { setSaving(false); }
   }
+
+  const categoryOptions = [
+    { value: "", label: "— Aucune catégorie —" },
+    ...categories.map((c) => ({ value: c.id, label: c.name })),
+  ];
 
   return (
     <AdminFormLayout
       title={isEdit ? "Modifier l'article" : "Nouvel article"}
-      backHref="/admin/articles"
-      backLabel="Articles"
+      backHref="/admin/articles" backLabel="Articles"
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid gap-5 sm:grid-cols-2">
@@ -119,32 +116,19 @@ export function ArticleForm({ article, categories }: Props) {
 
           <div>
             <label className={labelCls}>Catégorie</label>
-            <select value={form.categoryId}
-              onChange={(e) => set("categoryId", e.target.value)}
-              className={selectCls}>
-              <option value="">— Aucune catégorie —</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </select>
+            <AdminSelect
+              value={form.categoryId}
+              onChange={(v) => set("categoryId", v)}
+              options={categoryOptions}
+            />
           </div>
 
           <div>
             <label className={labelCls}>Statut</label>
-            <select value={form.status}
-              onChange={(e) => set("status", e.target.value)}
-              className={selectCls}>
-              <option value="DRAFT">Brouillon</option>
-              <option value="PUBLISHED">Publié</option>
-              <option value="ARCHIVED">Archivé</option>
-            </select>
-          </div>
-
-          <div className="sm:col-span-2">
-            <ImageUpload
-              label="Image de couverture"
-              value={form.coverImage}
-              onChange={(url) => set("coverImage", url)}
+            <AdminSelect
+              value={form.status}
+              onChange={(v) => set("status", v)}
+              options={STATUS_OPTIONS}
             />
           </div>
 
@@ -153,6 +137,12 @@ export function ArticleForm({ article, categories }: Props) {
             <input type="datetime-local" value={form.publishedAt}
               onChange={(e) => set("publishedAt", e.target.value)}
               className={fieldCls} />
+          </div>
+
+          <div className="sm:col-span-2">
+            <ImageUpload label="Image de couverture"
+              value={form.coverImage}
+              onChange={(url) => set("coverImage", url)} />
           </div>
         </div>
 

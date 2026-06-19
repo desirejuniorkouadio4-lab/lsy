@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminFormLayout, fieldCls, selectCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
+import { AdminSelect } from "@/components/admin/AdminSelect";
 import { DOCUMENT_TYPES, LEVELS, SUBJECTS } from "@/lib/constants";
 
 type Document = {
@@ -12,6 +13,16 @@ type Document = {
 };
 
 interface Props { document?: Document }
+
+const TYPE_OPTIONS = DOCUMENT_TYPES.map((t) => ({ value: t, label: t }));
+const LEVEL_OPTIONS = [
+  { value: "", label: "— Tous niveaux —" },
+  ...LEVELS.map((l) => ({ value: l, label: l })),
+];
+const SUBJECT_OPTIONS = [
+  { value: "", label: "— Toutes matières —" },
+  ...SUBJECTS.map((s) => ({ value: s, label: s })),
+];
 
 export function DocumentForm({ document }: Props) {
   const router = useRouter();
@@ -74,23 +85,15 @@ export function DocumentForm({ document }: Props) {
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={labelCls}>Type *</label>
-            <select value={form.type} onChange={(e) => set("type", e.target.value)} className={fieldCls}>
-              {DOCUMENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
+            <AdminSelect value={form.type} onChange={(v) => set("type", v)} options={TYPE_OPTIONS} />
           </div>
           <div>
             <label className={labelCls}>Niveau</label>
-            <select value={form.level} onChange={(e) => set("level", e.target.value)} className={fieldCls}>
-              <option value="">— Tous niveaux —</option>
-              {LEVELS.map((l) => <option key={l} value={l}>{l}</option>)}
-            </select>
+            <AdminSelect value={form.level} onChange={(v) => set("level", v)} options={LEVEL_OPTIONS} />
           </div>
           <div>
             <label className={labelCls}>Matière</label>
-            <select value={form.subject} onChange={(e) => set("subject", e.target.value)} className={fieldCls}>
-              <option value="">— Toutes matières —</option>
-              {SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select>
+            <AdminSelect value={form.subject} onChange={(v) => set("subject", v)} options={SUBJECT_OPTIONS} />
           </div>
           <div>
             <label className={labelCls}>Année</label>
