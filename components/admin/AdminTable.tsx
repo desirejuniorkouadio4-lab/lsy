@@ -77,7 +77,7 @@ export function AdminTable({
   }
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       {/* En-tête */}
       <div className="mb-4 flex items-center justify-between gap-4">
         <div>

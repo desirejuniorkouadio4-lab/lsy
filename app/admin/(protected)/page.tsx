@@ -41,7 +41,7 @@ export default async function AdminDashboard() {
   const stats = await getStats();
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white">Tableau de bord</h1>
         <p className="mt-1 text-sm text-white/40">
@@ -49,7 +49,7 @@ export default async function AdminDashboard() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
         {STAT_CARDS.map(({ label, key, Icon, href, color }) => (
           <Link
             key={key}

@@ -55,7 +55,7 @@ export default async function DocumentsPage() {
                 <Reveal>
                   <SectionHeader eyebrow="Catégorie" title={type} />
                 </Reveal>
-                <Stagger className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" stagger={0.05}>
+                <Stagger className="grid gap-3 lg:grid-cols-2 xl:grid-cols-3" stagger={0.05}>
                   {grouped[type].map((doc) => (
                     <StaggerItem key={doc.id}>
                       <a
@@ -66,7 +66,7 @@ export default async function DocumentsPage() {
                       >
                         <FileText className="mt-0.5 size-5 shrink-0 text-lsy-gold-600" aria-hidden />
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-semibold text-lsy-blue-900">
+                          <p className="text-sm font-semibold leading-snug text-lsy-blue-900 line-clamp-2">
                             {doc.title}
                           </p>
                           {doc.description && (
