@@ -29,6 +29,8 @@ export default async function AdminEvenementsPage() {
       rows={rows}
       createHref="/admin/evenements/nouveau"
       createLabel="Nouvel événement"
+      editBasePath="/admin/evenements"
+      deleteApiPath="/api/admin/evenements"
     />
   );
 }

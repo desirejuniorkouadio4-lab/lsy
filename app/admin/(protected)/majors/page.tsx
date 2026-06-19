@@ -30,6 +30,8 @@ export default async function AdminMajorsPage() {
       rows={rows}
       createHref="/admin/majors/nouveau"
       createLabel="Ajouter un major"
+      editBasePath="/admin/majors"
+      deleteApiPath="/api/admin/majors"
     />
   );
 }

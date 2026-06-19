@@ -31,6 +31,8 @@ export default async function AdminCommuniquesPage() {
       rows={rows}
       createHref="/admin/communiques/nouveau"
       createLabel="Nouveau communiqué"
+      editBasePath="/admin/communiques"
+      deleteApiPath="/api/admin/communiques"
     />
   );
 }

@@ -29,6 +29,8 @@ export default async function AdminDocumentsPage() {
       rows={rows}
       createHref="/admin/documents/nouveau"
       createLabel="Nouveau document"
+      editBasePath="/admin/documents"
+      deleteApiPath="/api/admin/documents"
     />
   );
 }

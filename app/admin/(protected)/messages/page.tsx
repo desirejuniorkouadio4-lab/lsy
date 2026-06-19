@@ -29,6 +29,7 @@ export default async function AdminMessagesPage() {
       title="Messages de contact"
       columns={["Nom", "Email", "Objet", "Statut", "Reçu le"]}
       rows={rows}
+      editBasePath="/admin/messages"
     />
   );
 }

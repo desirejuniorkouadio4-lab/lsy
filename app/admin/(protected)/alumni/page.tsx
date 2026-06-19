@@ -31,6 +31,7 @@ export default async function AdminAlumniPage() {
       title="Inscriptions alumni"
       columns={["Nom", "Email", "Promotion", "Profession", "Mentor", "Statut", "Date"]}
       rows={rows}
+      editBasePath="/admin/alumni"
     />
   );
 }

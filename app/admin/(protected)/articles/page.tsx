@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { PlusCircle } from "lucide-react";
 import { db } from "@/lib/db";
 import { AdminTable } from "@/components/admin/AdminTable";
 import { formatDateShort } from "@/lib/utils";
@@ -32,6 +30,8 @@ export default async function AdminArticlesPage() {
       rows={rows}
       createHref="/admin/articles/nouveau"
       createLabel="Nouvel article"
+      editBasePath="/admin/articles"
+      deleteApiPath="/api/admin/articles"
     />
   );
 }
