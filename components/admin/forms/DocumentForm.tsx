@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
 import { AdminSelect } from "@/components/admin/AdminSelect";
+import { FileUpload } from "@/components/admin/FileUpload";
 import { DOCUMENT_TYPES, LEVELS, SUBJECTS } from "@/lib/constants";
 
 type Document = {
@@ -75,12 +76,11 @@ export function DocumentForm({ document }: Props) {
             placeholder="Description courte du document" className={fieldCls} />
         </div>
         <div>
-          <label className={labelCls}>URL du fichier *</label>
-          <input type="text" required value={form.fileUrl}
-            onChange={(e) => set("fileUrl", e.target.value)}
-            placeholder="https://drive.google.com/... ou /uploads/fichier.pdf"
-            className={fieldCls} />
-          <p className="mt-1 text-xs text-white/30">Lien Google Drive, Dropbox, ou chemin relatif</p>
+          <FileUpload
+            label="Fichier *"
+            value={form.fileUrl}
+            onChange={(url) => set("fileUrl", url)}
+          />
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <div>

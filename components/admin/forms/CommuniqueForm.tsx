@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AdminFormLayout, fieldCls, labelCls } from "@/components/admin/AdminFormLayout";
 import { AdminSelect } from "@/components/admin/AdminSelect";
 import { RichEditor } from "@/components/admin/RichEditor";
+import { FileUpload } from "@/components/admin/FileUpload";
 import { slugify } from "@/lib/slugify";
 
 type Communique = {
@@ -99,10 +100,11 @@ export function CommuniqueForm({ communique }: Props) {
             <AdminSelect value={form.status} onChange={(v) => set("status", v)} options={STATUS_OPTIONS} />
           </div>
           <div className="sm:col-span-2">
-            <label className={labelCls}>Fichier joint (URL)</label>
-            <input type="text" value={form.fileUrl}
-              onChange={(e) => set("fileUrl", e.target.value)}
-              placeholder="https://..." className={fieldCls} />
+            <FileUpload
+              label="Fichier joint (PDF, Word…)"
+              value={form.fileUrl}
+              onChange={(url) => set("fileUrl", url)}
+            />
           </div>
         </div>
 
