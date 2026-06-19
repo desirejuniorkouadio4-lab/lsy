@@ -56,7 +56,7 @@ export function LogoLSY({
         <span className="flex flex-col leading-none">
           <span
             className={cn(
-              "font-display text-[0.95rem] font-bold tracking-tight sm:text-base",
+              "whitespace-nowrap font-display text-[0.88rem] font-bold tracking-tight",
               dark ? "text-white" : "text-lsy-blue-900",
             )}
           >
@@ -64,7 +64,7 @@ export function LogoLSY({
           </span>
           <span
             className={cn(
-              "mt-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em]",
+              "mt-1 whitespace-nowrap text-[0.62rem] font-semibold uppercase tracking-[0.16em]",
               dark ? "text-lsy-gold-300" : "text-lsy-gold-600",
             )}
           >
