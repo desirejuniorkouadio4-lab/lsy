@@ -16,27 +16,27 @@ export const metadata: Metadata = {
 const ESPACES = [
   {
     label: "Espace élève",
-    desc: "Emploi du temps, ressources pédagogiques et notifications.",
+    desc: "Ressources pédagogiques, communiqués et agenda.",
     href: "/portail/eleve",
     Icon: GraduationCap,
     color: "bg-lsy-blue-900",
-    available: false,
+    available: true,
   },
   {
     label: "Espace parent",
-    desc: "Communiqués, documents et suivi de scolarité.",
+    desc: "Communiqués officiels, documents et agenda.",
     href: "/portail/parent",
     Icon: Users,
     color: "bg-lsy-blue-700",
-    available: false,
+    available: true,
   },
   {
     label: "Espace enseignant",
-    desc: "Dépôt de ressources, notes et communiqués internes.",
+    desc: "Ressources, notes de service et agenda.",
     href: "/portail/enseignant",
     Icon: Presentation,
     color: "bg-lsy-gold-600",
-    available: false,
+    available: true,
   },
   {
     label: "Administration",
